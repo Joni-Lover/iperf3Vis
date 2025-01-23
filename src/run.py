@@ -16,12 +16,12 @@ def parse_arguments():
 
     parser.add_argument(
         "--output",
-        help="The file to store the plot to",
+        help="The file or directory to store the plot to (will use plot.png if directory is specified)",
         default=os.path.dirname(__file__) + "/plot.png")
 
     parser.add_argument(
         "--time-interval",
-        help="The time interval to floor data points to (see pandas timeseries-offset-aliases).",
+        help="The time interval to floor data points to. Either a number of seconds or a pandas timeseries-offset-alias (e.g., 'H' for hourly).",
         default="H"
     )
 

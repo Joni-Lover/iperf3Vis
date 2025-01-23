@@ -2,9 +2,20 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import altair as alt
+import os
 
 
 def plot_ribbon_plot(data, interval_string, output_file, width, height, display):
+    # Convert numeric interval to seconds offset string
+    if interval_string.isdigit():
+        interval_string = f'{interval_string}s'  # Use lowercase 's' for seconds
+
+    # Ensure output file has .png extension
+    if os.path.isdir(output_file):
+        output_file = os.path.join(output_file, 'plot.png')
+    elif not output_file.lower().endswith('.png'):
+        output_file = output_file + '.png'
+
     data.index = data.index.floor(interval_string)
 
     # Generate data for mean and error bands
@@ -54,8 +65,14 @@ def plot_ribbon_plot(data, interval_string, output_file, width, height, display)
 
 
 def plot_box_plot(data, interval_string, output_file, width, height):
+    # Ensure output file has .png extension
+    if os.path.isdir(output_file):
+        output_file = os.path.join(output_file, 'plot.png')
+    elif not output_file.lower().endswith('.png'):
+        output_file = output_file + '.png'
+
     data.index = data.index.floor(interval_string)
     fig = plt.figure(figsize=(24, 9))
     sns.set(style="ticks")
-    sns.boxplot(data.index, data["Upload Speed (MBit/s)"])
+    sns.boxplot(x=data["Upload Speed (MBit/s)"])
     plt.savefig(output_file)
